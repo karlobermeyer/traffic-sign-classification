@@ -1,0 +1,138 @@
+// Comments are as in C++
+/*
+See Wikipedia article on DOT for other good simple examples.
+
+View from command line:
+$ dotty example.dot
+
+Create a .png file:
+$ dot -Tpng example.dot > example.dot.png
+
+Create a .ps file:
+$ dot -Tps example.dot > example.dot.ps
+
+When writing a label string to a dot file in Python, be sure to run
+label = label.replace('\n', '\\n')
+*/
+
+digraph G{
+    graph [pad="0.5", nodesep="0.2", ranksep="0.2"]
+    fontsize=20;
+    //label="CNN Architecture";
+    labelloc=t;
+    layout=dot;
+    node [margin=0.03 width=0 height=0];
+    //size="1,1";
+    orientation=P; // P => portrait, L => landscape,
+    rankdir="TB"; // "BT" => bottom->top, "LR" => left->right
+
+    // These seem broken
+    //sep="+0.1,+0.1"; // margin to leave around nodes when removing node overlap
+    //esep="+0.1,+0.1"; // margin around polygons for spline edge routing
+
+    -1 [label="Image",
+       shape=polygon, // rectangle, parallelogram, box, circle, record
+       skew=0.3,
+       fixedsize=true, // Hack to reduce padding.
+       width=0.7, height=0.27, // You have to guess these.
+       //margin=0.03, width=0, height=0,
+       fillcolor=green, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    -1 -> 0;
+    //0 -> 1 [label=50, penwidth=2]; // style=dotted
+    //0 -> 1 [label="foo"];
+
+    0 [label="Preprocessing", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=cyan, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    0 -> 1;
+
+    1 [label="Convolution", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=orange, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    1 -> 2;
+
+    2 [label="Pooling", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=yellow, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    2 -> 3;
+
+    3 [label="Convolution", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=orange, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    3 -> 4;
+
+    4 [label="Pooling", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=yellow, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    4 -> 5;
+
+    5 [label="Flatten", group=0,
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=yellow, // ".7 .3 1.0"
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    5 -> 6;
+
+    6 [label="Fully Connected", group=0,
+       shape=rectangle, // rectangle, parallelogram, diamond
+       fillcolor=gray, // ".7 .3 1.0"
+       //regular=true,
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    6 -> 7 [label=" dropout"];
+
+    7 [label="Fully Connected", group=0,
+       shape=rectangle, // rectangle, parallelogram, diamond
+       fillcolor=gray, // ".7 .3 1.0"
+       //regular=true,
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    7 -> 8 [label=" dropout"];
+
+    8 [label="Fully Connected", group=0,
+       shape=rectangle, // rectangle, parallelogram, diamond
+       fillcolor=gray, // ".7 .3 1.0"
+       //regular=true,
+       style="filled" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+
+    8 -> 9;
+
+    9 [label="Classification",
+       shape=rectangle, // rectangle, parallelogram
+       fillcolor=red, // ".7 .3 1.0"
+       style="filled,rounded" // filled, rounded, diagonals
+       //penwidth=2
+      ];
+}

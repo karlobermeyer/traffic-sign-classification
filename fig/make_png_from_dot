@@ -1,0 +1,19 @@
+#!/bin/bash
+#!/usr/bin/bash
+
+# Extract base filename.
+filename_without_extension=${1%????}
+image_filename=$filename_without_extension.png
+rotated_image_filename=$filename_without_extension-horizontal.png
+
+# Convert .dot to .png.
+dot -Tpng $1 > $image_filename
+
+# Crop with 5 pixel padding.
+convert $image_filename -trim -bordercolor White -border 5x5 +repage $image_filename
+
+# Rotate.
+convert $image_filename -rotate -90 $rotated_image_filename
+
+#eog $1.png &
+open $image_filename $rotated_image_filename &
